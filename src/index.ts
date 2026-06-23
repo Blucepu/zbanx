@@ -6,8 +6,8 @@ import { deploy } from "./commands/deploy.ts"
 const program = new Command()
 
 program
-  .name("zbx")
-  .description("ZBX CLI - 静态站点部署工具")
+  .name("zbanx")
+  .description("zbanx - 静态站点部署工具")
   .version("0.1.0")
 
 program

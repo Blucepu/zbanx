@@ -1,11 +1,11 @@
 {
   "name": "zbanx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
-  "description": "ZBX CLI - 静态站点部署工具",
+  "description": "zbanx - 静态站点部署工具",
   "license": "MIT",
   "bin": {
-    "zbx": "dist/index.js"
+    "zbanx": "dist/index.js"
   },
   "scripts": {
     "build": "bun build src/index.ts --outdir dist --target node",
