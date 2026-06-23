@@ -7,13 +7,13 @@ const program = new Command()
 
 program
   .name("zbanx")
-  .description("zbanx - 静态站点部署工具")
+  .description("zbanx - static site deployment tool")
   .version("0.1.0")
 
 program
   .command("deploy")
-  .description("构建并部署静态站点到阿里云 OSS")
-  .option("--no-build", "跳过构建步骤，仅上传")
+  .description("Build and deploy static site to Alibaba Cloud OSS")
+  .option("--no-build", "Skip build step, upload only")
   .action(async (options: { build: boolean }) => {
     try {
       const cwd = process.cwd()

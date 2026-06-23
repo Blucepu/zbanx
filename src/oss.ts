@@ -66,7 +66,7 @@ export async function uploadToOss(distDir: string, config: ZbxConfig, accountId:
   const stats: UploadStats = { fileCount: 0, totalSize: 0 }
   const basePath = getBasePath(accountId, projectName)
 
-  console.log(`\x1b[36m▶\x1b[0m 上传 ${files.length} 个文件到 OSS...`)
+  console.log(`\x1b[36m>\x1b[0m Uploading ${files.length} files to OSS...`)
   console.log(`  bucket: ${config.oss.bucket}`)
   console.log(`  path: ${basePath}\n`)
 
@@ -86,7 +86,7 @@ export async function uploadToOss(distDir: string, config: ZbxConfig, accountId:
 
     stats.fileCount++
     stats.totalSize += fileSize
-    console.log(`  \x1b[32m✓\x1b[0m ${ossKey} (${formatSize(fileSize)})`)
+    console.log(`  \x1b[32m[OK]\x1b[0m ${ossKey} (${formatSize(fileSize)})`)
   }
 
   return stats

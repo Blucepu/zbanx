@@ -68,8 +68,8 @@ export async function loadConfig(cwd: string): Promise<ZbxConfig> {
     fileConfig = JSON.parse(raw) as Partial<ZbxConfig>
   } catch {
     throw new Error(
-      `未找到配置文件 ${CONFIG_FILENAME}。\n` +
-        `请在项目根目录创建此文件，示例：\n\n` +
+      `Config file ${CONFIG_FILENAME} not found.\n` +
+        `Create it in the project root directory, example:\n\n` +
         JSON.stringify(
           {
             api: {
@@ -117,17 +117,17 @@ export async function loadConfig(cwd: string): Promise<ZbxConfig> {
 
   if (!accessKeyId || !accessKeySecret) {
     throw new Error(
-      "缺少 OSS 凭证。请在 .env 文件或环境变量中设置：\n" +
+      "Missing OSS credentials. Set in .env or environment variables:\n" +
         "  ALIBABA_CLOUD_ACCESS_KEY_ID\n" +
         "  ALIBABA_CLOUD_ACCESS_KEY_SECRET",
     )
   }
 
   if (!config.oss.region) {
-    throw new Error("缺少 OSS region。请在 deploy.json 或环境变量 ALIBABA_CLOUD_OSS_REGION 中设置。")
+    throw new Error("Missing OSS region. Set in deploy.json or env var ALIBABA_CLOUD_OSS_REGION.")
   }
   if (!config.oss.bucket) {
-    throw new Error("缺少 OSS bucket。请在 deploy.json 或环境变量 ALIBABA_CLOUD_OSS_BUCKET 中设置。")
+    throw new Error("Missing OSS bucket. Set in deploy.json or env var ALIBABA_CLOUD_OSS_BUCKET.")
   }
 
   return config

@@ -76,14 +76,14 @@ function readInput(prompt: string, mask: boolean): Promise<string> {
 async function promptCredentials(): Promise<{ account: string; password: string }> {
   const baseUrl = process.env.ZBX_API_URL || "https://v2-api.zbanx.com"
   console.log()
-  console.log("  +--- ZBX 登录 ----------------------------+")
-  console.log(`  |  服务器: ${baseUrl.padEnd(33)}|`)
-  console.log("  +-----------------------------------------+")
+  console.log("  +--- ZBX Login -----------------------------+")
+  console.log(`  |  Server: ${baseUrl.padEnd(33)}|`)
+  console.log("  +------------------------------------------+")
 
-  const account = await readInput("  |  账号: ", false)
-  const password = await readInput("  |  密码: ", true)
+  const account = await readInput("  |  Account: ", false)
+  const password = await readInput("  |  Password: ", true)
 
-  console.log("  +-----------------------------------------+")
+  console.log("  +------------------------------------------+")
   console.log()
 
   return { account, password }
@@ -92,7 +92,7 @@ async function promptCredentials(): Promise<{ account: string; password: string 
 export async function login(cwd: string, config: ZbxConfig): Promise<number> {
   const cached = loadSession()
   if (cached) {
-    console.log(`  \x1b[32m✔\x1b[0m 已登录（账号 ID: ${cached.accountId}）`)
+    console.log(`  \x1b[32m[OK]\x1b[0m Already logged in (account ID: ${cached.accountId})`)
     console.log()
     return cached.accountId
   }
@@ -112,14 +112,14 @@ export async function login(cwd: string, config: ZbxConfig): Promise<number> {
       const accountId = json.data.account.id as number
       const nickname = json.data.account.nickname as string
       saveSession(accountId)
-      console.log(`  \x1b[32m✔\x1b[0m 登录成功，欢迎 ${nickname}`)
+      console.log(`  \x1b[32m[OK]\x1b[0m Login successful, welcome ${nickname}`)
       console.log()
       return accountId
     }
 
-    const reason = json.code === 300001 ? "密码错误或账号不存在" : json.reason || json.msg || "未知错误"
-    console.log(`  \x1b[33m✖\x1b[0m ${reason}`)
-    console.log(`  \x1b[33m⚠\x1b[0m 登录失败，按 Ctrl+C 取消后重试`)
+    const reason = json.code === 300001 ? "Invalid password or account not found" : json.reason || json.msg || "Unknown error"
+    console.log(`  \x1b[33m[ERR]\x1b[0m ${reason}`)
+    console.log(`  \x1b[33m[!]\x1b[0m Login failed. Press Ctrl+C to cancel and retry`)
     console.log()
   }
 }
