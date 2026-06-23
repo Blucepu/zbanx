@@ -1,0 +1,36 @@
+{
+  "name": "zbanx",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "ZBX CLI - 静态站点部署工具",
+  "license": "MIT",
+  "bin": {
+    "zbx": "dist/index.js"
+  },
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --target node",
+    "typecheck": "bun tsc --noEmit",
+    "prepublishOnly": "bun run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "bun": ">=1.0.0",
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "ali-oss": "^6.23.0",
+    "commander": "^15.0.0",
+    "mime-types": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/ali-oss": "^6.23.3",
+    "@types/bun": "latest",
+    "@types/mime-types": "^3.0.1",
+    "@types/node": "^26.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
