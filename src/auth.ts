@@ -76,14 +76,14 @@ function readInput(prompt: string, mask: boolean): Promise<string> {
 async function promptCredentials(): Promise<{ account: string; password: string }> {
   const baseUrl = process.env.ZBX_API_URL || "https://v2-api.zbanx.com"
   console.log()
-  console.log("  ┌─ ZBX 登录 ─────────────────────────────┐")
-  console.log(`  │  服务器: ${baseUrl.padEnd(33)}│`)
-  console.log("  ├─────────────────────────────────────────┤")
+  console.log("  +--- ZBX 登录 ----------------------------+")
+  console.log(`  |  服务器: ${baseUrl.padEnd(33)}|`)
+  console.log("  +-----------------------------------------+")
 
-  const account = await readInput("  │  账号: ", false)
-  const password = await readInput("  │  密码: ", true)
+  const account = await readInput("  |  账号: ", false)
+  const password = await readInput("  |  密码: ", true)
 
-  console.log("  └─────────────────────────────────────────┘")
+  console.log("  +-----------------------------------------+")
   console.log()
 
   return { account, password }
