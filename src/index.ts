@@ -9,7 +9,7 @@ const program = new Command()
 program
   .name("zbanx")
   .description("zbanx - static site deployment tool")
-  .version("0.1.0")
+  .version("1.1.0", "-v, --version")
 
 program
   .command("deploy")
