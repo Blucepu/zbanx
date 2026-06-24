@@ -1,9 +1,7 @@
 import { mkdir, readFile, writeFile, readdir, unlink } from "node:fs/promises"
 import { existsSync } from "node:fs"
-import { join } from "node:path"
-import { Readable } from "node:stream"
-import { pipeline } from "node:stream/promises"
-import { extract as tarExtract } from "tar"
+import { dirname, join } from "node:path"
+import AdmZip from "adm-zip"
 
 const TEMPLATE_REPO = "Blucepu/snapstatic"
 const TEMPLATE_BRANCH = "main"
@@ -67,7 +65,7 @@ export async function initProject(
   console.log()
 
   // Download template from GitHub
-  const url = `https://github.com/${TEMPLATE_REPO}/archive/refs/heads/${TEMPLATE_BRANCH}.tar.gz`
+  const url = `https://github.com/${TEMPLATE_REPO}/archive/refs/heads/${TEMPLATE_BRANCH}.zip`
   console.log(`  \x1b[36m>\x1b[0m Downloading template from ${TEMPLATE_REPO}...`)
 
   const response = await fetch(url)
@@ -80,15 +78,19 @@ export async function initProject(
   // Ensure target directory exists
   await mkdir(targetDir, { recursive: true })
 
-  // Extract template/ subdirectory, stripping repo-root/ and template/
-  await pipeline(
-    Readable.from(buffer),
-    tarExtract({
-      strip: 2,
-      C: targetDir,
-      filter: (path: string) => path.includes("/template/"),
-    }),
-  )
+  // Extract template/ subdirectory from GitHub zip
+  // Zip entry format: snapstatic-main/template/package.json
+  const zip = new AdmZip(buffer)
+
+  for (const entry of zip.getEntries()) {
+    const path = entry.entryName.replace(/\\/g, "/")
+    if (!path.includes("/template/") || entry.isDirectory) continue
+
+    const relPath = path.split("/").slice(2).join("/")
+    const outPath = join(targetDir, relPath)
+    await mkdir(dirname(outPath), { recursive: true })
+    await writeFile(outPath, entry.getData() as Buffer)
+  }
 
   // Remove hero.png (binary, intentionally not scaffolded)
   const heroPng = join(targetDir, "src", "assets", "hero.png")

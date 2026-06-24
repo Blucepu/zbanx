@@ -1,6 +1,6 @@
 {
   "name": "zbanx",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "type": "module",
   "description": "zbanx - 静态站点部署工具",
   "license": "MIT",
@@ -38,20 +38,20 @@
   ],
   "engines": {
     "bun": ">=1.0.0",
-    "node": ">=18.0.0"
+    "node": ">=22.12.0"
   },
   "dependencies": {
+    "adm-zip": "^0.5.17",
     "ali-oss": "^6.23.0",
     "commander": "^15.0.0",
     "mime-types": "^3.0.2",
-    "proxy-agent": "^8.0.2",
-    "tar": "^7.4.3"
+    "proxy-agent": "^8.0.2"
   },
   "devDependencies": {
+    "@types/adm-zip": "^0.5.8",
     "@types/ali-oss": "^6.23.3",
     "@types/bun": "latest",
     "@types/mime-types": "^3.0.1",
-    "@types/tar": "^7.0.3",
     "@types/node": "^26.0.0"
   },
   "peerDependencies": {
