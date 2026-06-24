@@ -2,6 +2,7 @@
 
 import { Command } from "commander"
 import { deploy } from "./commands/deploy.ts"
+import { initProject } from "./commands/init.ts"
 
 const program = new Command()
 
@@ -18,6 +19,20 @@ program
     try {
       const cwd = process.cwd()
       await deploy(cwd, { skipBuild: !options.build })
+    } catch (err) {
+      console.error(`\n\x1b[31m✖\x1b[0m ${err instanceof Error ? err.message : String(err)}`)
+      process.exit(1)
+    }
+  })
+
+program
+  .command("init")
+  .description("Create a new project from the snapstatic template")
+  .argument("<project-name>", "Project name (lowercase + hyphens, or '.' for current dir)")
+  .option("--overwrite", "Overwrite existing files if target directory exists")
+  .action(async (projectName: string, options: { overwrite?: boolean }) => {
+    try {
+      await initProject(projectName, { overwrite: options.overwrite })
     } catch (err) {
       console.error(`\n\x1b[31m✖\x1b[0m ${err instanceof Error ? err.message : String(err)}`)
       process.exit(1)
